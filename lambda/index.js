@@ -5,12 +5,24 @@
  * */
 const Alexa = require('ask-sdk-core');
 
+const catFacts = [
+    "A group of cats is called a clowder.", 
+    "The technical term for a cat's hairball is a bezoar.",
+    "Over 30% of households in North America have a cat.",
+    "Cats can make about 100 different sounds."
+ ]
+
+const getRandom = (len) => {
+    const random = Math.floor(Math.random() * len);
+    return random;
+}
+
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
+        const speakOutput = 'Welcome, you can say Hello, Help, or ask for a cool cat fact. Which would you like to try?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -25,7 +37,7 @@ const HelloWorldIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Hello from the Catfax Alexa Skill!';
+        const speakOutput = 'Hey there! Do you want me to tell you a cat fact?';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -40,7 +52,8 @@ const CatFactsIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CatFactsIntent';
     }, 
     handle(handlerInput) {
-        const speakOutput = "A group of cats is called a clowder."
+        const random = getRandom(catFacts.length)
+        const speakOutput = catFacts[random]
         
         return handlerInput.responseBuilder
             .speak(speakOutput)
