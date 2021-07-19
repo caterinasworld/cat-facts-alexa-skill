@@ -25,7 +25,7 @@ const HelloWorldIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
     },
     handle(handlerInput) {
-        const speakOutput = 'Hello World!';
+        const speakOutput = 'Hello from the Catfax Alexa Skill!';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -40,7 +40,7 @@ const CatFactsIntentHandler = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CatFactsIntent';
     }, 
     handle(handlerInput) {
-        const speakOutput = "testing"
+        const speakOutput = "A group of cats is called a clowder."
         
         return handlerInput.responseBuilder
             .speak(speakOutput)
