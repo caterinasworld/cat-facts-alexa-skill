@@ -5,180 +5,211 @@
  * */
 const Alexa = require('ask-sdk-core');
 
+// The cat facts below come from https://www.factretriever.com/cat-facts
 const catFacts = [
-    "A group of cats is called a clowder.", 
-    "The technical term for a cat's hairball is a bezoar.",
-    "Over 30% of households in North America have a cat.",
-    "Cats can make about 100 different sounds."
- ]
+  'A group of cats is called a clowder.',
+  'The technical term for a cat’s hairball is a bezoar.',
+  'Over 30% of households in North America own a cat.',
+  'Most cats give birth to a litter of between one and nine kittens.',
+  'A cat can jump up to five times its own height in a single bound.',
+  'Cats make about 100 different sounds.',
+  'During the time of the Spanish Inquisition, Pope Innocent VIII condemned cats as evil and thousands of cats were burned. Unfortunately, the widespread killing of cats led to an explosion of the rat population, which exacerbated the effects of the Black Death.',
+  'Approximately 40,000 people are bitten by cats in the U.S. annually.',
+  'A cat can hear high-frequency sounds up to two octaves higher than a human.',
+  'One reason that kittens sleep so much is because a growth hormone is released only during sleep.',
+];
 
 const getRandom = (len) => {
-    const random = Math.floor(Math.random() * len);
-    return random;
-}
-
-const LaunchRequestHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello, Help, or ask for a cool cat fact. Which would you like to try?';
-
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
-            .getResponse();
-    }
+  const random = Math.floor(Math.random() * len);
+  return random;
 };
 
-const HelloWorldIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Hey there! Do you want me to tell you a cat fact?';
+const LaunchRequestHandler = {
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest'
+    );
+  },
+  handle(handlerInput) {
+    const speakOutput =
+      'Welcome, you can say Hello, Help, or ask for a cool cat fact. Which would you like to try?';
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .getResponse();
-    }
+    return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt(speakOutput)
+      .getResponse();
+  },
+};
+
+const HelloIntentHandler = {
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloIntent'
+    );
+  },
+  handle(handlerInput) {
+    const speakOutput = 'Hey there! Do you want me to tell you a cat fact?';
+
+    return (
+      handlerInput.responseBuilder
+        .speak(speakOutput)
+        //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+        .getResponse()
+    );
+  },
 };
 
 const CatFactsIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CatFactsIntent';
-    }, 
-    handle(handlerInput) {
-        const random = getRandom(catFacts.length)
-        const speakOutput = catFacts[random]
-        
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .getResponse();
-    }
-}; 
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === 'CatFactsIntent'
+    );
+  },
+  handle(handlerInput) {
+    const random = getRandom(catFacts.length);
+    const speakOutput = catFacts[random];
+
+    return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+  },
+};
 
 const HelpIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent';
-    },
-    handle(handlerInput) {
-        const speakOutput = 'You can say hello to me! How can I help?';
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.HelpIntent'
+    );
+  },
+  handle(handlerInput) {
+    const speakOutput = 'You can say hello to me! How can I help?';
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
-            .getResponse();
-    }
+    return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt(speakOutput)
+      .getResponse();
+  },
 };
 
 const CancelAndStopIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.CancelIntent'
-                || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Goodbye!';
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      (Alexa.getIntentName(handlerInput.requestEnvelope) ===
+        'AMAZON.CancelIntent' ||
+        Alexa.getIntentName(handlerInput.requestEnvelope) ===
+          'AMAZON.StopIntent')
+    );
+  },
+  handle(handlerInput) {
+    const speakOutput = 'Goodbye!';
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .getResponse();
-    }
+    return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+  },
 };
 /* *
  * FallbackIntent triggers when a customer says something that doesn’t map to any intents in your skill
  * It must also be defined in the language model (if the locale supports it)
- * This handler can be safely added but will be ingnored in locales that do not support it yet 
+ * This handler can be safely added but will be ingnored in locales that do not support it yet
  * */
 const FallbackIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Sorry, I don\'t know about that. Please try again.';
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) ===
+        'AMAZON.FallbackIntent'
+    );
+  },
+  handle(handlerInput) {
+    const speakOutput = "Sorry, I don't know about that. Please try again.";
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
-            .getResponse();
-    }
+    return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt(speakOutput)
+      .getResponse();
+  },
 };
 /* *
- * SessionEndedRequest notifies that a session was ended. This handler will be triggered when a currently open 
- * session is closed for one of the following reasons: 1) The user says "exit" or "quit". 2) The user does not 
- * respond or says something that does not match an intent defined in your voice model. 3) An error occurs 
+ * SessionEndedRequest notifies that a session was ended. This handler will be triggered when a currently open
+ * session is closed for one of the following reasons: 1) The user says "exit" or "quit". 2) The user does not
+ * respond or says something that does not match an intent defined in your voice model. 3) An error occurs
  * */
 const SessionEndedRequestHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
-    },
-    handle(handlerInput) {
-        console.log(`~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`);
-        // Any cleanup logic goes here.
-        return handlerInput.responseBuilder.getResponse(); // notice we send an empty response
-    }
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) ===
+      'SessionEndedRequest'
+    );
+  },
+  handle(handlerInput) {
+    console.log(
+      `~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`
+    );
+    // Any cleanup logic goes here.
+    return handlerInput.responseBuilder.getResponse(); // notice we send an empty response
+  },
 };
 /* *
  * The intent reflector is used for interaction model testing and debugging.
- * It will simply repeat the intent the user said. You can create custom handlers for your intents 
- * by defining them above, then also adding them to the request handler chain below 
+ * It will simply repeat the intent the user said. You can create custom handlers for your intents
+ * by defining them above, then also adding them to the request handler chain below
  * */
 const IntentReflectorHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest';
-    },
-    handle(handlerInput) {
-        const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
-        const speakOutput = `You just triggered ${intentName}`;
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+    );
+  },
+  handle(handlerInput) {
+    const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
+    const speakOutput = `You just triggered ${intentName}`;
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .getResponse();
-    }
+    return (
+      handlerInput.responseBuilder
+        .speak(speakOutput)
+        //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+        .getResponse()
+    );
+  },
 };
 /**
  * Generic error handling to capture any syntax or routing errors. If you receive an error
  * stating the request handler chain is not found, you have not implemented a handler for
- * the intent being invoked or included it in the skill builder below 
+ * the intent being invoked or included it in the skill builder below
  * */
 const ErrorHandler = {
-    canHandle() {
-        return true;
-    },
-    handle(handlerInput, error) {
-        const speakOutput = 'Sorry, I had trouble doing what you asked. Please try again.';
-        console.log(`~~~~ Error handled: ${JSON.stringify(error)}`);
+  canHandle() {
+    return true;
+  },
+  handle(handlerInput, error) {
+    const speakOutput =
+      'Sorry, I had trouble doing what you asked. Please try again.';
+    console.log(`~~~~ Error handled: ${JSON.stringify(error)}`);
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
-            .getResponse();
-    }
+    return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .reprompt(speakOutput)
+      .getResponse();
+  },
 };
 
 /**
  * This handler acts as the entry point for your skill, routing all request and response
  * payloads to the handlers above. Make sure any new handlers or interceptors you've
- * defined are included below. The order matters - they're processed top to bottom 
+ * defined are included below. The order matters - they're processed top to bottom
  * */
 exports.handler = Alexa.SkillBuilders.custom()
-    .addRequestHandlers(
-        LaunchRequestHandler,
-        HelloWorldIntentHandler,
-        CatFactsIntentHandler,
-        HelpIntentHandler,
-        CancelAndStopIntentHandler,
-        FallbackIntentHandler,
-        SessionEndedRequestHandler,
-        IntentReflectorHandler)
-    .addErrorHandlers(
-        ErrorHandler)
-    .withCustomUserAgent('sample/hello-world/v1.2')
-    .lambda();
+  .addRequestHandlers(
+    LaunchRequestHandler,
+    HelloIntentHandler,
+    CatFactsIntentHandler,
+    HelpIntentHandler,
+    CancelAndStopIntentHandler,
+    FallbackIntentHandler,
+    SessionEndedRequestHandler,
+    IntentReflectorHandler
+  )
+  .addErrorHandlers(ErrorHandler)
+  .withCustomUserAgent('sample/hello-world/v1.2')
+  .lambda();

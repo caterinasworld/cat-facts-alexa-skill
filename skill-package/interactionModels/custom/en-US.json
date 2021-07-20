@@ -1,0 +1,67 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "catfax",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "HelloIntent",
+          "slots": [],
+          "samples": [
+            "hello",
+            "hey",
+            "hi",
+            "hello there",
+            "hey there",
+            "hi there",
+            "heya",
+            "hello there catfax",
+            "hey there catfax",
+            "hi there catfax"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "CatFactsIntent",
+          "slots": [],
+          "samples": [
+            "tell me something about cats",
+            "tell me something else about cats",
+            "what is a cool cat fact",
+            "what is a cool fact about cats",
+            "what is another cool cat fact",
+            "what is another cool fact about cats",
+            "yes tell me a cat fact",
+            "yes tell me a fact about cats",
+            "yes what is a cool cat fact",
+            "yes what is a cool fact aboat cats",
+            "yes i want to hear a cat fact",
+            "yes i want to hear a fact about cats",
+            "yes tell me more",
+            "yes another"
+          ]
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "8"
+}
